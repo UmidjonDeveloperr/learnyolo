@@ -1,18 +1,11 @@
-from PIL import Image
 from ultralytics import YOLO
 
-model = YOLO("yolov8n-seg.pt")
+model = YOLO("yolov8n.pt")
 
 source = "videos/cars_video.mp4"
 
-result = model(source=source, show=True, conf=0.4, save=False)
+result = model.train(data="coco8.yaml", epochs=100, imgsz=640)
 
-for i, r in enumerate(result):
-    # Plot results image
-    im_bgr = r.plot()  # BGR-order numpy array
-    im_rgb = Image.fromarray(im_bgr[..., ::-1])  # RGB-order PIL image
-
-    # Show results to screen (in supported environments)
-    r.show()
+result = model.predict(source=0, show=True, conf=0.4, save=False)
 
 
