@@ -6,3 +6,5 @@ result = model.predict(source=0, show=True, conf=0.4, save=False)
 
 metrics = model.val()
 print(metrics.box.map)
+
+model.export(format="onnx", dynamic=True, imgsz=640, half=True, optimize=True)
